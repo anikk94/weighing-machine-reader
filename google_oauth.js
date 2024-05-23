@@ -13,7 +13,13 @@ fetch("secrets.json")
     console.log(data);
     CLIENT_ID=data.CLIENT_ID;
     API_KEY=data.API_KEY;
+  })
+  .catch((err) => {
+    console.log(err)
+    CLIENT_ID=prompt("Enter your CLIENT_ID");
+    API_KEY=prompt("Enter your API_KEY");
   });
+
 
 
 // Discovery doc URL for APIs used by the quickstart
