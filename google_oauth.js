@@ -7,17 +7,22 @@
 // const CLIENT_ID = "abc";
 // const API_KEY = "abc";
 
-fetch("secrets.json")
+let CLIENT_ID, API_KEY;
+fetch("secretss.json")
   .then((response) => response.json())
   .then((data) => {
     console.log(data);
     CLIENT_ID=data.CLIENT_ID;
     API_KEY=data.API_KEY;
+  gapiLoaded();
+  gisLoaded()
   })
   .catch((err) => {
-    console.log(err)
+    console.error(err)
     CLIENT_ID=prompt("Enter your CLIENT_ID");
     API_KEY=prompt("Enter your API_KEY");
+    gapiLoaded();
+    gisLoaded()
   });
 
 
