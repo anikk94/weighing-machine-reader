@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weighing Machine Reader</title>
+  <script src="camera.js"></script>
+  <style>
+    body{
+      overflow-x: hidden;
+    }
+    .block-level-border{
+      border: solid 1px black;
+    }
+    #sheet-content{
+      font-family: 'Courier New', Courier, monospace;
+    }
+  </style>
+</head>
+
+<body onload="main()">
+  <!-- <canvas id="cam-canvas"
+  width="400px" height="400px"
+  style="border: solid 1px black;"></canvas> -->
+  <canvas id="cam-canvas"
+  style="border: solid 1px black;"></canvas>
+
+  
+  <!-- google_oauth -->
+  <div>
+    <!-- <button onclick="client.requestCode();">OAuth2</button> -->
+    <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
+    <br>
+    <br>
+    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+    <br>
+    <br>
+    <pre id="content" style="white-space: pre-wrap;"></pre>
+  </div>
+
+
+  <div>
+    <div class="block-level-border" >
+      <button>capture</button>
+    </div>
+    <div id="system-message" class="block-level-border" >
+      <p>debug message</p>
+    </div>
+
+    <div class="block-level-border" >
+      <p>detected value</p>
+    </div>
+    <div class="block-level-border" >
+      <p>sheets in spreadsheet. sheet selector</p>
+      <form action="">
+        <label for="">spreadsheet ID</label>
+        <br>
+        <input style="width: 99%;" type="text" value="1k55sp6DwPFX82Ksf2mRzTuFpzeCVFhsJfOeftZXfQm4" name="" id="">
+      </form>
+    </div>
+    <div class="block-level-border" >
+      <button>update spreadsheet</button>
+    </div>
+    <div class="block-level-border" >
+      <h2>SpreadSheet Rows
+        <button onclick="getValues();">Fetch Sheet Data</button>
+      </h2>
+      
+      <p id="sheet-content"></p>
+    </div>
+  </div>
+
+  
+  <script src="google_oauth.js" type="text/javascript"></script>
+  <script src="sheets.js"></script>
+  <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+  <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+  <!-- <script>
+    fetch("secrets")
+    .then((res)=>res.json())
+    .then((text)=>{
+      console.log(text)
+    })
+    .catch((e)=>console.error(e));
+  </script> -->
+
+
+</body>
+
+</html>
