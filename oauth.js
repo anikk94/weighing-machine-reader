@@ -18,10 +18,10 @@ fetch("secrets.json")
   })
   .catch((err) => {
     console.error(err)
-    CLIENT_ID = prompt("Enter your CLIENT_ID");
-    API_KEY = prompt("Enter your API_KEY");
-    gapiLoaded();
-    gisLoaded()
+    // CLIENT_ID = prompt("Enter your CLIENT_ID");
+    // API_KEY = prompt("Enter your API_KEY");
+    // gapiLoaded();
+    // gisLoaded()
   });
 
 
@@ -181,24 +181,32 @@ async function listMajors() {
   document.getElementById('content').innerText = output;
 }
 
-// function handleCredentialResponse(response) {
-//   // decodeJwtResponse() is a custom function defined by you
-//   // to decode the credential response.
-//   const responsePayload = decodeJwtResponse(response.credential);
+function handleCredentialResponse(response) {
+  // decodeJwtResponse() is a custom function defined by you
+  // to decode the credential response.
+  // const responsePayload = decodeJwtResponse(response.credential);
+  const responsePayload = parseJwt(response.credential);
 
-//   console.log("ID: " + responsePayload.sub);
-//   console.log('Full Name: ' + responsePayload.name);
-//   console.log('Given Name: ' + responsePayload.given_name);
-//   console.log('Family Name: ' + responsePayload.family_name);
-//   console.log("Image URL: " + responsePayload.picture);
-//   console.log("Email: " + responsePayload.email);
-// }
+  console.log("ID: " + responsePayload.sub);
+  console.log('Full Name: ' + responsePayload.name);
+  console.log('Given Name: ' + responsePayload.given_name);
+  console.log('Family Name: ' + responsePayload.family_name);
+  console.log("Image URL: " + responsePayload.picture);
+  console.log("Email: " + responsePayload.email);
+}
+
 
 async function printLoginSuccess() {
   document.getElementById('content').innerText = "Logged In";
 
 }
 
-function credRespCallback(){
-  alert("credRespCallback()");
+function parseJwt (token) {
+  var base64Url = token.split('.')[1];
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
 }
