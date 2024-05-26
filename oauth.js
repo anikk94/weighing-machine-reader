@@ -6,21 +6,20 @@
 // TODO(developer): Set to client ID and API key from the Developer Console
 // const CLIENT_ID = "abc";
 // const API_KEY = "abc";
-
 let CLIENT_ID, API_KEY;
-fetch("secretss.json")
+fetch("secrets.json")
   .then((response) => response.json())
   .then((data) => {
     console.log(data);
-    CLIENT_ID=data.CLIENT_ID;
-    API_KEY=data.API_KEY;
-  gapiLoaded();
-  gisLoaded()
+    CLIENT_ID = data.CLIENT_ID;
+    API_KEY = data.API_KEY;
+    gapiLoaded();
+    gisLoaded()
   })
   .catch((err) => {
     console.error(err)
-    CLIENT_ID=prompt("Enter your CLIENT_ID");
-    API_KEY=prompt("Enter your API_KEY");
+    CLIENT_ID = prompt("Enter your CLIENT_ID");
+    API_KEY = prompt("Enter your API_KEY");
     gapiLoaded();
     gisLoaded()
   });
@@ -29,12 +28,16 @@ fetch("secretss.json")
 
 // Discovery doc URL for APIs used by the quickstart
 const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
+const DRIVE_DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
+const SHEETS_DISCOVERY_DOC = "https://sheets.googleapis.com/$discovery/rest?version=v4";
 
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
 // const SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly';
 const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
+const DRIVE_SCOPES = "https://www.googleapis.com/auth/drive.readonly";
+const SHEETS_SCOPES = "https://www.googleapis.com/auth/spreadsheets";
 
 let tokenClient;
 let gapiInited = false;
@@ -47,8 +50,6 @@ document.getElementById('signout_button').style.visibility = 'hidden';
  * Callback after api.js is loaded.
  */
 function gapiLoaded() {
-  console.log("gapiLoaded()");
-
   gapi.load('client', initializeGapiClient);
 }
 
@@ -56,10 +57,19 @@ function gapiLoaded() {
 * Callback after the API client is loaded. Loads the
 * discovery doc to initialize the API.
 */
+// async function initializeGapiClient() {
+//   await gapi.client.init({
+//     apiKey: API_KEY,
+//     discoveryDocs: [DISCOVERY_DOC],
+//   });
+//   gapiInited = true;
+//   maybeEnableButtons();
+// }
+
 async function initializeGapiClient() {
   await gapi.client.init({
     apiKey: API_KEY,
-    discoveryDocs: [DISCOVERY_DOC],
+    discoveryDocs: [DRIVE_DISCOVERY_DOC, SHEETS_DISCOVERY_DOC],
   });
   gapiInited = true;
   maybeEnableButtons();
@@ -69,16 +79,29 @@ async function initializeGapiClient() {
 * Callback after Google Identity Services are loaded.
 */
 function gisLoaded() {
-  console.log("gisLoaded()");
+  gisAuthorization();
+}
 
+// function gisAuthorization() {
+//   tokenClient = google.accounts.oauth2.initTokenClient({
+//     client_id: CLIENT_ID,
+//     scope: SCOPES,
+//     callback: '', // defined later
+//   });
+//   gisInited = true;
+//
+//   google.accounts.id.initialize()
+// }
+
+function gisAuthorization() {
+  maybeEnableButtons();
   tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
-    scope: SCOPES,
+    scope: [DRIVE_SCOPES, SHEETS_SCOPES].join(" "),
     callback: '', // defined later
   });
   gisInited = true;
 
-  // google.accounts.id.initialize()
   maybeEnableButtons();
 }
 
@@ -87,7 +110,6 @@ function gisLoaded() {
 */
 function maybeEnableButtons() {
   if (gapiInited && gisInited) {
-    // if (gisInited) {
     document.getElementById('authorize_button').style.visibility = 'visible';
   }
 }
@@ -175,4 +197,8 @@ async function listMajors() {
 async function printLoginSuccess() {
   document.getElementById('content').innerText = "Logged In";
 
+}
+
+function credRespCallback(){
+  alert("credRespCallback()");
 }

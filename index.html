@@ -20,26 +20,39 @@
 </head>
 
 <body onload="main()">
-  <!-- <canvas id="cam-canvas"
-  width="400px" height="400px"
-  style="border: solid 1px black;"></canvas> -->
-  <canvas id="cam-canvas"
-  style="border: solid 1px black;"></canvas>
+  <!-- <canvas id="cam-canvas" width="400px" height="400px" style="border: solid 1px black;"></canvas> -->
+  <canvas id="cam-canvas" style="border: solid 1px black;"></canvas>
 
   
   <!-- google_oauth -->
-  <div>
+  <div class="block-level-border">
+    <div id="g_id_onload"
+        data-client_id="460706214742-op8f7v1tceb9jreg85ei0ep22d6roguk.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-callback="credRespCallback"
+        data-auto_select="true"
+        data-itp_support="true">
+    </div>
+
+    <div class="g_id_signin"
+        data-type="standard"
+        data-shape="rectangular"
+        data-theme="outline"
+        data-text="signin_with"
+        data-size="large"
+        data-logo_alignment="left">
+    </div>
+    
     <!-- <button onclick="client.requestCode();">OAuth2</button> -->
-    <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
-    <br>
-    <br>
+
+    <!-- <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
     <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
-    <br>
-    <br>
+    <br> -->
     <pre id="content" style="white-space: pre-wrap;"></pre>
   </div>
 
-
+  <!-- weighing machine reader app -->
   <div>
     <div class="block-level-border" >
       <button>capture</button>
@@ -72,22 +85,14 @@
   </div>
 
   
-  <script src="google_oauth.js" type="text/javascript"></script>
+  <script src="oauth.js" type="text/javascript"></script>
+  <script src="drive.js"></script>
   <script src="sheets.js"></script>
   <script async defer src="https://apis.google.com/js/api.js"></script>
   <script async defer src="https://accounts.google.com/gsi/client"></script>
   <!-- <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
   <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script> -->
-  <!-- <script>
-    fetch("secrets")
-    .then((res)=>res.json())
-    .then((text)=>{
-      console.log(text)
-    })
-    .catch((e)=>console.error(e));
-  </script> -->
-
-
+  
 </body>
 
 </html>

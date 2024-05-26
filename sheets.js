@@ -3,6 +3,15 @@ const RANGE = "A1:d100";
 
 const sheetContent = document.getElementById("sheet-content");
 
+// select spreadsheet owned by user
+
+// select sheet in spreadsheet
+
+// select row with correct date
+
+// add row below (check for multiple rows for same date)
+
+
 function getValues(spreadsheetId=SPREADSHEETID, range=RANGE, callback=getValuesCB) {
   // spreadsheetId = SPREADSHEETID;
   // range = RANGE;
